@@ -1,0 +1,43 @@
+slr_bench:
+  resources_servers:
+    slr_bench:
+      entrypoint: app.py
+      slr_reward: isomorphic
+      slr_reward_function: shaped
+      evaluation_timeout_sec: 5
+      domain: other
+      verified: false
+      description: SLR-Bench logical rule induction with verifiable Prolog rewards
+      value: Improve RLVR logical reasoning and reward-hacking robustness
+slr_bench_simple_agent:
+  responses_api_agents:
+    simple_agent:
+      entrypoint: app.py
+      resources_server:
+        type: resources_servers
+        name: slr_bench
+      model_server:
+        type: responses_api_models
+        name: policy_model
+      datasets:
+      - name: train
+        type: train
+        jsonl_fpath: resources_servers/slr_bench/data/train.jsonl
+        huggingface_identifier:
+          repo_id: AIML-TUDA/SLR-Bench
+        license: TBD
+      - name: validation
+        type: validation
+        jsonl_fpath: resources_servers/slr_bench/data/validation.jsonl
+        huggingface_identifier:
+          repo_id: AIML-TUDA/SLR-Bench
+        license: TBD
+      - name: test
+        type: validation
+        jsonl_fpath: resources_servers/slr_bench/data/test.jsonl
+        huggingface_identifier:
+          repo_id: AIML-TUDA/SLR-Bench
+        license: TBD
+      - name: example
+        type: example
+        jsonl_fpath: resources_servers/slr_bench/data/example.jsonl
